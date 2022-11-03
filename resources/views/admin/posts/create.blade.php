@@ -1,12 +1,19 @@
-<form>
+@extends('layouts.app')
+
+@section('content')
+
+<form name="add-blog-post-form" id="add-blog-post-form" method="POST" action="{{isset($post->id) ? route('posts.update', $post->id) : route('posts.store')}}">
+  @csrf
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <label for="ArticleTitle" class="form-label">Titre de l'article</label>
+      <input value="{{isset($post->title) ? $post->title : old('title')}}" type="title" name="title" class="form-control" id="ArticleTitle" aria-describedby="ArticleTitle">
     </div>
     <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1">
+      <label for="ContentArticle" class="form-label">Contenu de l'article</label>
+      <textarea class="form-control" name="description" id="ContentArticle" rows="3">{{isset($post->description) ? $post->description : old('description')}}</textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Envoyer</button>
   </form>
+
+
+  @endsection

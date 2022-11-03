@@ -17,7 +17,16 @@
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active">Accueil</a></li>
+
+                <li class="nav-item me-2">
+                    <a href="/" class="btn btn-primary" type="button">Accueil</a>
+                </li>
+                <li class="nav-item me-2">
+                    <a href="/posts/create" class="btn btn-outline-primary" type="button">Créer un post</a>
+                </li>
+                <li class="nav-item me-2">
+                    <a href="/posts" class="btn btn-danger" type="button">ADMIN</a>
+                </li>
             </ul>
         </header>
     </div>
