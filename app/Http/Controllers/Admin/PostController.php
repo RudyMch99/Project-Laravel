@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Http\Requests\PostRequest;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -37,17 +38,18 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $post = new Post;
         $post->title = $request->title;
         $post->slug = Str::slug($request->title, '-');
         $post->description = $request->description;
+        $post->published = $request->published;
         $post->save();
 
         session()->flash('success', "L'article a bien été enregistré");
 
-        return redirect()->route('posts.index');
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -56,7 +58,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug, $id)
+    public function show($id, $slug)
     {
         $post = Post::find($id);
         return view("pages.show", compact("post"));
@@ -68,10 +70,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::find($id);
-        return view("admin.posts.create", compact('post'));
+        return view("admin.posts.edit", compact("post"));
     }
 
     /**
@@ -81,18 +82,19 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $post)
     {
-        $update = Post::find($id);
+        $update = Post::find($post);
 
         $update->title = $request->get('title');
         $update->slug = Str::slug($request->get('title'), "-");
         $update->description = $request->get('description');
+        $post->published = $request->get('published');
         $update->save();
 
         session()->flash('success', "L'article a bien été modifié");
 
-        return redirect()->route('posts.index');
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -108,6 +110,6 @@ class PostController extends Controller
 
         session()->flash('success', "L'article a bien été supprimé");
 
-        return redirect()->route('posts.index');
+        return redirect()->route('admin.posts.index');
     }
 }

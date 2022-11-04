@@ -1,17 +1,28 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
-                </div>
+@section('content')
+
+<h1 class="m-4">Dashboard</h1>
+
+    <div class="row h-auto">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Administration des articles</h5>
+              <p class="card-text">Ajouts, modifications et suppression des articles pour le blog.</p>
+              <a href="{{route('admin.posts.index')}}" class="btn btn-primary" type="button">articles</a>
             </div>
+          </div>
         </div>
-    </div>
-</x-app-layout>
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Adminitration des catégories</h5>
+              <p class="card-text">Ajouts, modifications et suppression des catégories pour les articles.</p>
+              <a href="#" class="btn btn-primary">EN CONTRUCTION</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+@endsection

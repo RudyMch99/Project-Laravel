@@ -21,12 +21,18 @@
                 <li class="nav-item me-2">
                     <a href="/" class="btn btn-primary" type="button">Accueil</a>
                 </li>
+                @auth
+
                 <li class="nav-item me-2">
-                    <a href="/posts/create" class="btn btn-outline-primary" type="button">Créer un post</a>
+                    <a href="{{route('dashboard')}}" class="btn text-primary" type="button">dashboard</a>
                 </li>
                 <li class="nav-item me-2">
-                    <a href="/posts" class="btn btn-danger" type="button">ADMIN</a>
+                    <form action="{{route('logout')}}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn text-primary">logout</a>
+                    </form>
                 </li>
+                @endauth
             </ul>
         </header>
     </div>

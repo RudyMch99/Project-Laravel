@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,18 +17,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'home']);
+Route::get('/posts/show/{id}-{slug}', [PostController::class, 'show'])->name('pages.show');
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], function () {
 
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts', [AdminPostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/create', [AdminPostController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store', [AdminPostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/edit/{post}', [AdminPostController::class, 'edit'])->name('posts.edit');
+    Route::put('/posts/{post}', [AdminPostController::class, 'update'])->name('posts.update');
+    Route::delete('/posts/destroy/{id}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
 
-Route::post('/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+});
 
-Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
-Route::post('/posts/{id}', [PostController::class, 'update'])->name('posts.update');
 
-Route::get('/posts/show/{slug}-{id}', [PostController::class, 'show'])->name('pages.show');
 
 
 Route::get('/dashboard', function () {
