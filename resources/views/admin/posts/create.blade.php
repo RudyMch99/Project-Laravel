@@ -15,8 +15,9 @@
       <textarea class="form-control" name="description" id="ContentArticle" rows="3"></textarea>
     </div>
     <div class="mb-3 form-check">
-      <input class="form-check-input" name="published" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
+      <input name="published" type="hidden" value="0">
+      <input class="form-check-input" name="published" id="published" type="checkbox" value="1">
+      <label class="form-check-label" for="published">
         Publié
       </label>
     </div>

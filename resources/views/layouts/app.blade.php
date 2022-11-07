@@ -21,6 +21,11 @@
                 <li class="nav-item me-2">
                     <a href="/" class="btn btn-primary" type="button">Accueil</a>
                 </li>
+                @guest
+                <li class="nav-item me-2">
+                    <a href="{{route('dashboard')}}" class="btn text-primary" type="button">connexion</a>
+                </li>
+                @endguest
                 @auth
 
                 <li class="nav-item me-2">

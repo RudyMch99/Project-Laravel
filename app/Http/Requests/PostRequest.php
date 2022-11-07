@@ -17,6 +17,7 @@ class PostRequest extends FormRequest
         return [
                 'title' => 'required|string|max:255',
                 'description' => 'required',
+                'published' => 'in:0,1'
         ];
     }
 }

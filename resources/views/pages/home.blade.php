@@ -11,17 +11,26 @@
                 <a class="btn btn-primary btn-lg px-4 gap-3" href="#LastPosts">Accédez aux actualités</a>
             </div>
         </div>
-    </div>
-@if(!$posts->isEmpty())
+    </div>    
     
-
-
     <h1 class="mb-4" id="LastPosts">Les derniers articles : </h1>
     <div class="d-flex justify-content-end my-2">
         <a href="{{route('admin.posts.create')}}" class="btn btn-primary" type="button">Ajouter un post</a>
     </div>
+    
     <div class="list-group w-auto mb-4">
 
+    <a href="" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+        <div class="d-flex gap-2 w-100 justify-content-between">
+@if($posts->isEmpty())
+            <div>
+                <h6 class="mb-0">Aucun articles en ligne</h6>
+            </div>
+@endif
+</div>
+</a>
+@if(!$posts->isEmpty())
+    
     @foreach ($posts as $post)
         <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">

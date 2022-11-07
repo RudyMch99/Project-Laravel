@@ -8,7 +8,11 @@ class PageController extends Controller
 {
     public function home()
     {
-        $post = Post::latest()->get();
+        $post = Post::query()
+        ->orderBy('title')
+        ->where('published', true)
+        ->get();
+        
         return view('pages.home', ['posts' => $post]);
     }
 }

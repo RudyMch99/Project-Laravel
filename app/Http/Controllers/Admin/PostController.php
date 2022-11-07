@@ -44,7 +44,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->slug = Str::slug($request->title, '-');
         $post->description = $request->description;
-        $post->published = $request->published;
+        $post->published = (bool) $request->published;
         $post->save();
 
         session()->flash('success', "L'article a bien été enregistré");
@@ -84,12 +84,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $post)
     {
+        
         $update = Post::find($post);
-
         $update->title = $request->get('title');
         $update->slug = Str::slug($request->get('title'), "-");
         $update->description = $request->get('description');
-        $post->published = $request->get('published');
+        $update->published = (bool)$request->get('published');
         $update->save();
 
         session()->flash('success', "L'article a bien été modifié");

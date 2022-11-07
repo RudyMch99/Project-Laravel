@@ -16,12 +16,13 @@
       <textarea class="form-control" name="description" id="ContentArticle" rows="3">{{old('description', $post->description)}}</textarea>
     </div>
     <div class="mb-3 form-check">
-      <input class="form-check-input" name="published" type="checkbox" value="{{old('published')}}" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
+      <input name="published" type="hidden" value="0">
+      <input class="form-check-input" name="published" id="published" type="checkbox" value="1" @if (old('published', $post->published)) checked @endif >
+      <label class="form-check-label" for="published">
         Publié
       </label>
     </div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
   </form>
 
 
