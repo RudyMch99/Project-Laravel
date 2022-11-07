@@ -19,7 +19,7 @@
             <div class="card-body">
               <h5 class="card-title">Adminitration des catégories</h5>
               <p class="card-text">Ajouts, modifications et suppression des catégories pour les articles.</p>
-              <a href="#" class="btn btn-primary">EN CONTRUCTION</a>
+              <a href="{{route('admin.categories.index')}}" class="btn btn-primary" type="button">catégories</a>
             </div>
           </div>
         </div>

@@ -9,8 +9,9 @@ class PageController extends Controller
     public function home()
     {
         $post = Post::query()
-        ->orderBy('title')
         ->where('published', true)
+        ->with('category')
+        ->latest()
         ->get();
         
         return view('pages.home', ['posts' => $post]);

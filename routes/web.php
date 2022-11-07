@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,12 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::put('/posts/{post}', [AdminPostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/destroy/{id}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
 
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories/store', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/edit/{category}', [AdminCategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/destroy/{id}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
 

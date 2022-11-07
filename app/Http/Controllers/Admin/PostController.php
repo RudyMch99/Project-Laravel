@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -29,7 +29,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $posts = Post::all();
+        $categories = Category::all();
+        return view('admin.posts.create', compact("posts", "categories"));
+
     }
 
     /**
@@ -45,6 +48,7 @@ class PostController extends Controller
         $post->slug = Str::slug($request->title, '-');
         $post->description = $request->description;
         $post->published = (bool) $request->published;
+        $post->category_id = $request->category_id;
         $post->save();
 
         session()->flash('success', "L'article a bien été enregistré");
@@ -72,7 +76,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view("admin.posts.edit", compact("post"));
+        $categories = Category::all();
+        return view("admin.posts.edit", compact("post", "categories"));
     }
 
     /**
@@ -82,7 +87,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $post)
+    public function update(PostRequest $request, $post)
     {
         
         $update = Post::find($post);
@@ -90,6 +95,7 @@ class PostController extends Controller
         $update->slug = Str::slug($request->get('title'), "-");
         $update->description = $request->get('description');
         $update->published = (bool)$request->get('published');
+        $update->category_id = $request->get('category_id');
         $update->save();
 
         session()->flash('success', "L'article a bien été modifié");

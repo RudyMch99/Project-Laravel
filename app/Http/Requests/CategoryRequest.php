@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -15,10 +14,7 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-                'title' => 'required|string|max:255',
-                'description' => 'required',
-                'published' => 'in:0,1',
-                'category_id' => 'nullable|integer'
+            'name' => 'required|string|max:255'
         ];
     }
 }
