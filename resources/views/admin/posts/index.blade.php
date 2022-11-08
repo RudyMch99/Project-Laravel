@@ -28,6 +28,9 @@
                     <h5 class="mb-0">{{ $post->title }}</h5>
                     <p class="mb-0 opacity-75">{{ $post->description }}</p>
                 </div>
+                <div>
+                    <img src="/images/{{ $post->image }}" alt="image de l'article" width="100px" height="75px" >
+                </div>
                 <small class="ms-auto opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
                 @if ($post->published)
                     <span class="badge bg-success">publié</span>

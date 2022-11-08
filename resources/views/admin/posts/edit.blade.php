@@ -33,6 +33,10 @@
       @endif>{{$category->name}}</option>
       @endforeach
     </select>
+    <div class="image mb-3">
+      <input type="file" class="form-control" required name="image">
+      <img src="/images/{{old('image', $post->image)}}" class="mt-3" alt="image de l'article" width="200px" height="150px">
+    </div>
     <div class="mb-3 form-check">
       <input name="published" type="hidden" value="0">
       <input class="form-check-input" name="published" id="published" type="checkbox" value="1" @if (old('published', $post->published)) checked @endif >

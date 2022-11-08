@@ -16,4 +16,15 @@ class PageController extends Controller
         
         return view('pages.home', ['posts' => $post]);
     }
+
+    public function filterByCategory(Request $request)
+    {
+        $posts = Post::with('category')
+        ->latest()
+        ->where('category_id', $request->id)
+        ->where('published', true)
+        ->get();
+
+        return view('pages.home', compact("posts"));
+    }
 }

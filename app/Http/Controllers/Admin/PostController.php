@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -49,6 +50,13 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->published = (bool) $request->published;
         $post->category_id = $request->category_id;
+        if(isset($request->image)){
+        $file = $request->file('image');
+
+        $imageName = Str::uuid().'.'.$file->extension();
+        $post->image = $imageName;
+        $request->image->move(public_path('images'), $imageName);
+        }
         $post->save();
 
         session()->flash('success', "L'article a bien été enregistré");
@@ -87,7 +95,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $post)
+    public function update(PostRequest $request, Post $post)
     {
         
         $update = Post::find($post);
@@ -96,6 +104,18 @@ class PostController extends Controller
         $update->description = $request->get('description');
         $update->published = (bool)$request->get('published');
         $update->category_id = $request->get('category_id');
+        if(isset($request->image)){
+            $file = $request->file('image');
+
+            if($post->image != null){
+                File::delete(public_path('images/' . $post->image));
+            }
+    
+            $imageName = Str::uuid().'.'.$file->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $post->image = $imageName;
+            }
+
         $update->save();
 
         session()->flash('success', "L'article a bien été modifié");
@@ -109,8 +129,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post, $id)
     {
+
+        if($post->image != null){
+            File::delete(public_path('images/' . $post->image));
+        }
+
         $post = Post::where('id', $id);
         $post->delete();
 

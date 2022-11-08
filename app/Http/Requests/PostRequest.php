@@ -18,7 +18,8 @@ class PostRequest extends FormRequest
                 'title' => 'required|string|max:255',
                 'description' => 'required',
                 'published' => 'in:0,1',
-                'category_id' => 'nullable|integer'
+                'category_id' => 'nullable|integer',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

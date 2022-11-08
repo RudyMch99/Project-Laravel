@@ -5,11 +5,23 @@
     @if(isset($post))
 
         <div class="card text-center">
-            {{-- <img src="..." class="card-img-top" alt="..."> import img later--}}
-            <h5 class="card-title">{{ $post->title }}</h5>
-            <p class="card-text opacity-75">{{ $post->description }}</p>
-            <div class="card-footer text-muted">{{ $post->created_at->format('d/m/Y') }}</div>
-        </div>
+            @if ($post->image != null)
+            <img src="/images/{{ $post->image }}" class="card-img-top" alt="image de l'article">
+            @endif
+
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ $post->title }}
+                </h5>
+                <p class="card-text opacity-75">
+                    {{ $post->description }}
+                </p>
+            </div>
+            <div class="card-footer text-muted">
+                {{ $post->created_at->format('d/m/Y') }}
+            </div>
+
+    </div>
 
 
             {{-- <a href='{{route('posts.edit', $post->id)}}' title="Modifier l'article" 

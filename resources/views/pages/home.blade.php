@@ -18,9 +18,9 @@
         <a href="{{route('admin.posts.create')}}" class="btn btn-primary" type="button">Ajouter un post</a>
     </div>
     
-    <div class="list-group w-auto mb-4 d-flex py-3">
+    <div class="list-group w-auto d-flex py-3">
 
-        <div class="d-flex gap-2 w-100 justify-content-between">
+        <div class=" gap-2 w-100 justify-content-between">
 @if($posts->isEmpty())
             <div>
                 <h6 class="mb-0">Aucun articles en ligne</h6>
@@ -29,13 +29,13 @@
 </div>
 </a>
 @if(!$posts->isEmpty())
-    
+
     @foreach ($posts as $post)
+    
         <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                    <span class="badge rounded-pill bg-info text-dark">{{ $post->category->name ?? '' }}</span>
-
+                    <span class="btn badge rounded-pill bg-info text-dark" href="{{route('categories.home', ["id"=>$post->category->id])}}" name="filterByCategory">{{ $post->category->name ?? '' }}</span>
                     <h6 class="mb-0">{{ $post->title }}</h6>
                     <p class="mb-0 opacity-75">{{ $post->description }}</p>
                 </div>
