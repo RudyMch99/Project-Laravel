@@ -24,13 +24,29 @@
 
             <div class="d-flex list-group-item list-group-item-action gap-1 py-3 w-100 align-items-center justify-content-between">
                 <div>
-                    <span class="badge rounded-pill bg-info text-dark">{{ $post->category->name ?? '' }}</span>
                     <h5 class="mb-0">{{ $post->title }}</h5>
                     <p class="mb-0 opacity-75">{{ $post->description }}</p>
+                    <p class="category_tag">
+                        Catégorie : 
+                        <span class="btn badge rounded-pill bg-dark text-light">
+                            {{ $post->category->name ?? '' }}
+                        </span>
+                    </p>
+                    <p class="tag_badge">
+                        Tags : 
+                        <a class="btn badge rounded-pill bg-info text-dark" 
+                        {{-- href="{{route('tags.home', ["id"=>$post->tag->id])}}" 
+                        name="filterByCategory" --}}>
+                            {{ $post->tag->name ?? '' }}
+                        </a>
+                    </p>
                 </div>
-                <div>
-                    <img src="/images/{{ $post->image }}" alt="image de l'article" width="100px" height="75px" >
+                @if ($post->image)
+                <div class="ms-auto">
+                    <img src="/images/{{ $post->image }}" width="100px" height="75px" >
                 </div>
+                @endif
+
                 <small class="ms-auto opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
                 @if ($post->published)
                     <span class="badge bg-success">publié</span>

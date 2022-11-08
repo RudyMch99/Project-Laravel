@@ -18,7 +18,6 @@
         <a href="{{route('admin.posts.create')}}" class="btn btn-primary" type="button">Ajouter un post</a>
     </div>
     
-    <div class="list-group w-auto d-flex py-3">
 
         <div class=" gap-2 w-100 justify-content-between">
 @if($posts->isEmpty())
@@ -28,7 +27,7 @@
 @endif
 </div>
 </a>
-@if(!$posts->isEmpty())
+{{-- @if(!$posts->isEmpty())
 
     @foreach ($posts as $post)
     
@@ -46,7 +45,68 @@
     
     </div>
 </div>
-@endif
+@endif --}}
 
     
-@endsection
+
+@if(!$posts->isEmpty())
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    
+    @foreach ($posts as $post)
+
+    <div class="col">
+      <div class="card shadow-sm h-100">
+
+        @if ($post->image == null)
+
+            <img src="" class="card-img-top bg-secondary" height="200px" width="300px"/>
+
+        @else
+
+            <img src="/images/{{ $post->image }}" class="card-img-top"/>
+
+        @endif
+
+        <div class="card-body d-flex flex-column">
+
+          <h5 class="card-title">{{ $post->title }}</h5>
+
+          <p class="card-text">
+            {{ $post->description }}
+          </p>
+        <div class="bottom_align_card mt-auto">
+            <p class="category_tag">
+                Catégorie : 
+                <a class="btn badge rounded-pill bg-dark text-light" 
+                href="{{route('categories.home', ["id"=>$post->category->id])}}" 
+                name="filterByCategory">
+                    {{ $post->category->name ?? '' }}
+                </a>
+            </p>
+            <p class="tag_badge">
+                Tags : 
+                <a class="btn badge rounded-pill bg-info text-dark" 
+                {{-- href="{{route('tags.home', ["id"=>$post->tag->id])}}" 
+                name="filterByCategory" --}}>
+                    {{ $post->tag->name ?? '' }}
+                </a>
+            </p>
+
+            <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}" class="btn btn-primary w-50 shadow-sm">Voir l'article</a>
+
+        </div>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Dernière modification le {{ $post->created_at->format('d/m/Y') }}</small>
+        </div>
+      </div>
+    </div>
+    @endforeach
+  </div>
+  @endif
+
+
+
+
+  @endsection

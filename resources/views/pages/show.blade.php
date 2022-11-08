@@ -6,7 +6,7 @@
 
         <div class="card text-center">
             @if ($post->image != null)
-            <img src="/images/{{ $post->image }}" class="card-img-top" alt="image de l'article">
+            <img src="/images/{{ $post->image }}" class="card-img-top">
             @endif
 
             <div class="card-body">
@@ -18,11 +18,13 @@
                 </p>
             </div>
             <div class="card-footer text-muted">
+                Article créé le :
                 {{ $post->created_at->format('d/m/Y') }}
             </div>
 
     </div>
 
+    
 
             {{-- <a href='{{route('posts.edit', $post->id)}}' title="Modifier l'article" 
                 class="ms-auto btn text-warning"><i class="bi bi-pencil"></i></a>
@@ -30,8 +32,6 @@
             @csrf
                 <button type="submit" class="btn text-danger"><i class="bi bi-trash"></i></button>
             </form> --}}
-
-
 
     @endif
 

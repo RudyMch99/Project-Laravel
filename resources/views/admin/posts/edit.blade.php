@@ -5,7 +5,7 @@
 
 @include('partials.validation')
 
-<form name="add-blog-post-form" id="add-blog-post-form" method="POST" action="{{route('admin.posts.update', $post->id)}}">
+<form name="add-blog-post-form" id="add-blog-post-form" method="POST" enctype="multipart/form-data" action="{{route('admin.posts.update', $post->id)}}">
   @csrf
 
   @method('put')
@@ -34,7 +34,7 @@
       @endforeach
     </select>
     <div class="image mb-3">
-      <input type="file" class="form-control" required name="image">
+      <input type="file" class="form-control" name="image">
       <img src="/images/{{old('image', $post->image)}}" class="mt-3" alt="image de l'article" width="200px" height="150px">
     </div>
     <div class="mb-3 form-check">
