@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PageController::class, 'home']);
+Route::get('/', [PageController::class, 'home'])->name('pages.home');;
 Route::get('/categories/{category}', [PageController::class, 'filterByCategory'])->name('categories.home');
 Route::get('/tags/{tag}', [PageController::class, 'filterByTag'])->name('tags.home');
 

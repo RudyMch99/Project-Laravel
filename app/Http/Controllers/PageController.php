@@ -29,7 +29,7 @@ class PageController extends Controller
         ->latest()
         ->get();
 
-        return view('pages.home', compact("posts"));
+        return view('pages.home', compact("posts", "category"));
     }
 
     public function filterByTag(Request $request, Tag $tag)
@@ -41,6 +41,6 @@ class PageController extends Controller
         ->latest()
         ->get();
 
-        return view('pages.home', compact("posts"));
+        return view('pages.home', compact("posts", "tag"));
     }
 }

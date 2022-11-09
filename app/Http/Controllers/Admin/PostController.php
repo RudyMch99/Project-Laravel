@@ -84,6 +84,10 @@ class PostController extends Controller
     public function show($id, $slug)
     {
         $post = Post::find($id);
+        $posts = Post::query()
+        ->with('category', 'tags')
+        ->latest()
+        ->get();
         return view("pages.show", compact("post"));
     }
 
