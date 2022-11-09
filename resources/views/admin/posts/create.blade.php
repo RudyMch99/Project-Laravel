@@ -26,8 +26,24 @@
         selected
 
       @endif>{{$category->name}}</option>
+
       @endforeach
     </select>
+
+    <label for="tags" class="form-label">Tags :</label>
+      <select class="form-select mb-3" multiple aria-label="multiple select" name="tags[]">
+        @foreach ($tags as $tag)
+
+          <option value="{{$tag->id}}" @if (in_array($tag->id, old('tags', [])))
+            
+           selected @endif>
+          
+            {{$tag->name}}
+      
+          </option>
+        @endforeach
+      </select>
+
 
         <div class="image mb-3">
           <input type="file" class="form-control" required name="image">

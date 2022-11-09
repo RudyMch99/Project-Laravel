@@ -26,20 +26,26 @@
                 <div>
                     <h5 class="mb-0">{{ $post->title }}</h5>
                     <p class="mb-0 opacity-75">{{ $post->description }}</p>
-                    <p class="category_tag">
-                        Catégorie : 
-                        <span class="btn badge rounded-pill bg-dark text-light">
-                            {{ $post->category->name ?? '' }}
-                        </span>
-                    </p>
+                    
+                    @if ($post->category != null)
+                        <p class="category_tag">
+                            <small> Catégorie : </small>
+                            <span class="btn badge rounded-pill bg-dark text-light">
+                                {{ $post->category->name }}
+                            </span>
+                        </p>
+                    @endif
+
+                    @if (!$post->tags->isEmpty())
                     <p class="tag_badge">
-                        Tags : 
-                        <a class="btn badge rounded-pill bg-info text-dark" 
-                        {{-- href="{{route('tags.home', ["id"=>$post->tag->id])}}" 
-                        name="filterByCategory" --}}>
-                            {{ $post->tag->name ?? '' }}
-                        </a>
+                        <small>Tags : </small>
+                        @foreach ($post->tags as $tag)
+                            <span class="btn badge rounded-pill bg-info text-light">
+                                {{ $tag->name }}
+                            </span>
+                        @endforeach
                     </p>
+                    @endif
                 </div>
                 @if ($post->image)
                 <div class="ms-auto">

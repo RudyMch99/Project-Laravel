@@ -76,22 +76,29 @@
             {{ $post->description }}
           </p>
         <div class="bottom_align_card mt-auto">
+
             <p class="category_tag">
                 Catégorie : 
                 <a class="btn badge rounded-pill bg-dark text-light" 
-                href="{{route('categories.home', ["id"=>$post->category->id])}}" 
+                href="{{route('categories.home', ["category"=>$post->category->id])}}" 
                 name="filterByCategory">
                     {{ $post->category->name ?? '' }}
                 </a>
             </p>
-            <p class="tag_badge">
-                Tags : 
-                <a class="btn badge rounded-pill bg-info text-dark" 
-                {{-- href="{{route('tags.home', ["id"=>$post->tag->id])}}" 
-                name="filterByCategory" --}}>
-                    {{ $post->tag->name ?? '' }}
-                </a>
-            </p>
+
+            @if (!$post->tags->isEmpty())
+            
+                <p class="tag_badge">
+                    <small>Tags :</small>
+                    @foreach ($post->tags as $tag)
+                    <a class="btn badge rounded-pill bg-info text-dark" 
+                        href="{{route('tags.home', ["tag"=>$tag->id])}}" 
+                        name="filterByTag">
+                        {{ $tag->name }}
+                    </a>
+                    @endforeach
+                </p>
+            @endif
 
             <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}" class="btn btn-primary w-50 shadow-sm">Voir l'article</a>
 

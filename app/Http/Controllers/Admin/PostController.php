@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -18,9 +19,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::query()
+        ->with('category', 'tags')
+        ->latest()
+        ->get();
 
-        return view('admin.posts.index', ['posts' => $posts]);
+        return view('admin.posts.index', compact("posts"));
     }
 
     /**
@@ -32,7 +36,8 @@ class PostController extends Controller
     {
         $posts = Post::all();
         $categories = Category::all();
-        return view('admin.posts.create', compact("posts", "categories"));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact("posts", "categories", "tags"));
 
     }
 
@@ -50,7 +55,7 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->published = (bool) $request->published;
         $post->category_id = $request->category_id;
-
+        
         if(isset($request->image)){
             $file = $request->file('image');
 
@@ -60,6 +65,10 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        if(isset($request->tags)){
+            $post->tags()->attach($request->tags);
+        }
 
         session()->flash('success', "L'article a bien été enregistré");
 
@@ -87,7 +96,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view("admin.posts.edit", compact("post", "categories"));
+        $tags = Tag::all();
+        return view("admin.posts.edit", compact("post", "categories", "tags"));
     }
 
     /**
@@ -116,6 +126,10 @@ class PostController extends Controller
             $imageName = Str::uuid().'.'.$request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $update->image = $imageName;
+        }
+
+        if(isset($request->tags)){
+            $update->tags()->sync($request->tags);
         }
 
         $update->save();

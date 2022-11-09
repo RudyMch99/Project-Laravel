@@ -33,6 +33,18 @@
       @endif>{{$category->name}}</option>
       @endforeach
     </select>
+
+    <select class="form-select mb-3" multiple aria-label="multiple select example" name="tags[]">
+      @foreach ($tags as $tag)
+
+        <option value="{{$tag->id}}">
+        
+          {{$tag->name}}
+    
+        </option>
+      @endforeach
+    </select>
+
     <div class="image mb-3">
       <input type="file" class="form-control" name="image">
       <img src="/images/{{old('image', $post->image)}}" class="mt-3" alt="image de l'article" width="200px" height="150px">
