@@ -17,98 +17,100 @@
     </div>
 </div>
 
-        <h2 class="mb-4">Les derniers articles : </h2>
-    @elseif(Route::is('categories.home') )
-        <h2 class="mb-4">Les derniers articles pour la catégorie : {{ $category->name }} </h2>
-    @elseif(Route::is('tags.home') )
-        <h2 class="mb-4">Les derniers articles pour le tag : {{ $tag->name }} </h2>
-@endif
+<section class="wrapper">
+    <div class="content" id="LastPosts">
+        <div class="container">
+            <h2 class="mb-4">Les derniers articles : </h2>
+            @elseif(Route::is('categories.home') )
+            <h2 class="mb-4">Les derniers articles pour la catégorie : {{ $category->name }} </h2>
+            @elseif(Route::is('tags.home') )
+            <h2 class="mb-4">Les derniers articles pour le tag : {{ $tag->name }} </h2>
+            @endif
 
-<div class="d-flex justify-content-end my-2">
-    <a href="{{route('admin.posts.create')}}" class="btn btn-primary" type="button">Ajouter un post</a>
-</div>
-
-
-<div class=" gap-2 w-100 justify-content-between">
-    @if($posts->isEmpty())
-    <div>
-        <h6 class="mb-0">Aucun articles en ligne</h6>
-    </div>
-    @endif
-</div>
-</a>
+            <div class="d-flex justify-content-end my-2">
+                <a href="{{route('admin.posts.create')}}" class="btn btn-primary" type="button">Ajouter un post</a>
+            </div>
 
 
-@if(!$posts->isEmpty())
+            <div class=" gap-2 w-100 justify-content-between">
+                @if($posts->isEmpty())
+                <div>
+                    <h6 class="mb-0">Aucun articles en ligne</h6>
+                </div>
+                @endif
+            </div>
+            </a>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row">
+                @if(!$posts->isEmpty())
 
-    @foreach ($posts as $post)
+                @foreach ($posts as $post)
+                <div class="col-xs-12 col-sm-4">
 
-    <div class="col">
-        <div class="card shadow-sm h-100">
+                    <div class="card d-flex">
+                        @if ($post->image == null)
 
-            @if ($post->image == null)
+                        <div class="img-card">
+                            <p class="text-center fst-italic"> Image non disponible </p>
+                        </div>
 
-            <img src="" class="card-img-top bg-secondary" height="200px" width="300px" />
+                        @else
 
-            @else
+                        <img src="/images/{{ $post->image }}" class="img-card" />
 
-            <img src="/images/{{ $post->image }}" class="card-img-top" />
+                        @endif
+
+                        <div class="card-content">
+                            <h4 class="card-title">
+                                <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}">
+                                    {{ $post->title }}
+                                </a>
+                            </h4>
+                            <p class="">
+                                {{ $post->description }}
+                            </p>
+                            <p class="category_tag">
+                                <small>Catégorie :</small>
+                                <a class="btn badge rounded-pill bg-dark"
+                                    href="{{route('categories.home', ["category"=>$post->category->id])}}"
+                                    name="filterByCategory">
+                                    {{ $post->category->name ?? '' }}
+                                </a>
+                            </p>
+
+                            @if (!$post->tags->isEmpty())
+
+                            <p class="tag_badge">
+                                <small>Tags :</small>
+
+                                @foreach ($post->tags as $tag)
+
+                                <a class="btn badge rounded-pill bg-info text-dark"
+                                    href="{{route('tags.home', ["tag"=>$tag->id])}}" name="filterByTag">
+                                    {{ $tag->name }}
+                                </a>
+
+                                @endforeach
+
+                            </p>
+                            @endif
+                        </div>
+                        <div class="card-read-more d-grid text-center mt-auto">
+                            <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}"
+                                class="btn text-primary">
+                                Lire Plus
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
 
             @endif
 
-            <div class="card-body d-flex flex-column">
-
-                <h5 class="card-title">{{ $post->title }}</h5>
-
-                <p class="card-text">
-                    {{ $post->description }}
-                </p>
-
-                <div class="bottom_align_card mt-auto">
-
-                    <p class="category_tag">
-                        Catégorie :
-                        <a class="btn badge rounded-pill bg-dark text-light"
-                            href="{{route('categories.home', ["category"=>$post->category->id])}}"
-                            name="filterByCategory">
-                            {{ $post->category->name ?? '' }}
-                        </a>
-                    </p>
-
-                    @if (!$post->tags->isEmpty())
-
-                    <p class="tag_badge">
-                        <small>Tags :</small>
-
-                        @foreach ($post->tags as $tag)
-
-                        <a class="btn badge rounded-pill bg-info text-dark"
-                            href="{{route('tags.home', ["tag"=>$tag->id])}}" name="filterByTag">
-                            {{ $tag->name }}
-                        </a>
-
-                        @endforeach
-
-                    </p>
-                    @endif
-
-                    <a href="{{route('pages.show', ["id"=>$post->id, "slug"=>$post->slug])}}"
-                        class="btn btn-primary w-50 shadow-sm">Voir l'article</a>
-
-                </div>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">Dernière modification le {{ $post->created_at->format('d/m/Y') }}</small>
-            </div>
         </div>
     </div>
-    @endforeach
-</div>
-@endif
-
-
-
+</section>
 
 @endsection
